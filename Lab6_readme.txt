@@ -80,12 +80,12 @@ MADCTRL  Memory Address Data CTRL
 
 //---------------------------------
 Hardware wiring
-PA2 = SSI0CLK  = LCD_SCK, pin 23    0
+PA2 = SSI0CLK  = LCD_SCK/TS_CLK, pin 23    0
 PA3 = SSI0Fss  = CSX, LCD_CS, pin 24  1
-PA5 = SSI0Tx   = LCD_SI, pin 19      2
+PA5 = SSI0Tx   = LCD_SI/TS_SI, pin 19      2
 
 PA4 = SSI0Rx   = TP_SO, pin 21
-PE0 = TP_CS, active low, pin 26
+PE0 = TP_CS, active low, pin 26  
 PE1 = TP_IRQ, pin 11
 
 PB0 = D/C pin for LCD, LCD_RS, pin 15
@@ -118,3 +118,13 @@ unsigned short xarray[100];
 
 xarray[i%100] = realdata;
 i++
+
+// crappy calibration
+highest corner:
+x: E96  (3734)
+y: C7D  (3197)
+
+Lowest corner:
+x: 266  (614)
+y: 256  (598)
+

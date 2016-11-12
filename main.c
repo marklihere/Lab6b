@@ -4,6 +4,8 @@
 
 unsigned short xarray[100];
 unsigned short yarray[100];
+int xtotal = 0;
+int ytotal = 0;
 
 int i = 0;
 
@@ -47,7 +49,8 @@ uint8_t sendAfterWaiting(uint8_t code) {
   while((SSI0b->SR & SSI_SR_TFE)==0){};  // wait until FIFO empty
 	SSI0b->DR = code;
 	while((SSI0b->SR & SSI_SR_RNE)==0){};  // wait until response received
-	return SSI0b->DR;	
+	return SSI0b->DR;
+
 }
 
 void INIT_GPIOE(void) {
@@ -65,10 +68,10 @@ void INIT_GPIOE(void) {
 
 void getX(void) {
 	// Temporary variables to store data as we read
-	unsigned short data;
-	
+	unsigned short data = 0;
+
 	GPIOE->DATA &= 0xFE; // chip select low
-  sendAfterWaiting(0x90);  // read x-coord
+  sendAfterWaiting(0xD0);  // read x-coord
   data = sendAfterWaiting(0) << 5;   // sends 16-bits of 0
 	data += sendAfterWaiting(0) >> 3;   // sends 16-bits of 0
 	GPIOE->DATA |= 0x1; // chip select high
@@ -77,10 +80,10 @@ void getX(void) {
 
 void getY(void) {
 	// Temporary variables to store data as we read
-	unsigned short data;
+	unsigned short data = 0;
 	
 	GPIOE->DATA &= 0xFE; // chip select low
-  sendAfterWaiting(0xD0);  // read x-coord
+  sendAfterWaiting(0x90);  // read x-coord
   data = sendAfterWaiting(0) << 5;   // sends 16-bits of 0
 	data += sendAfterWaiting(0) >> 3;   // sends 16-bits of 0
 	GPIOE->DATA |= 0x1; // chip select high
@@ -93,8 +96,6 @@ void getY(void) {
 void GPIOE_Handler(void) {
 	// lightLED();
 	int x = 0;
-	int xtotal = 0;
-	int ytotal = 0;
 	int divideby = 0;
 
 	// GET TOUCHED COORDINATES
