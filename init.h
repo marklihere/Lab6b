@@ -21,10 +21,11 @@ void GPIO_INIT(void) {
 		// Port A
 		// PA2 = SSI0CLK  = SDO, LCD_SCK, pin 23
     // PA3 = SSI0Fss  = CSX, LCD_CS, pin 24
+	  // PA4 = SSI0Rx = TP_SO, pin 21
     // PA5 = SSI0Tx   = LCD_SI, pin 19
-		// GPIOA->DIR |= 0x2C;          // PA2,3,5 output  Not needed
-		GPIOA->AFSEL |= 0x2C;        // Enable alt func on PA2,3,5
-    GPIOA->DEN |= 0x2C;          // enable digital I/O on PA2,3,5
+		// GPIOA->DIR |= 0x2C;          // PA2,3,4,5 output
+		GPIOA->AFSEL |= 0x3C;        // Enable alt func on PA2,3,4,5
+    GPIOA->DEN |= 0x3C;          // enable digital I/O on PA2,3,4,5
 
 		// Port B
 		// PB[0] = Data/CMD Pin for LCD (LCD_RS)
